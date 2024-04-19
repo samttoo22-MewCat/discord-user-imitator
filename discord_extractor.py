@@ -50,11 +50,12 @@ async def on_message(message):
                         if await check_if_referenced(user_message):
                             try:
                                 referenced_message = await message.channel.fetch_message(user_message.reference.message_id)
+                                referenced_message = referenced_message.content
                             except:
                                 referenced_message = ""
-                            if referenced_message.content == "" or "@" in referenced_message.content:
+                            if referenced_message == "" or "@" in referenced_message:
                                 continue
-                            output = {'input': f"User: {referenced_message.content}", 'output': f"Assistant: {user_message.content}"}
+                            output = {'input': f"User: {referenced_message}", 'output': f"Assistant: {user_message.content}"}
                             file.write(json.dumps(output, ensure_ascii=False) + '\n')
                             reference_counter += 1
             
